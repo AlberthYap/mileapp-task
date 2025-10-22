@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"task-api/app"
 	"task-api/configs"
 	"task-api/db"
 	"task-api/routes"
@@ -17,6 +18,9 @@ func main() {
   // connect to database
   mongoURI := configs.GetEnv("MONGO_URI", "mongodb://localhost:27017")
   db.ConnectDB(mongoURI)
+
+  // Initialize container
+  container := app.NewContainer(db.DB)
 
   // Setup Gin
   r := gin.Default()
@@ -33,7 +37,7 @@ func main() {
     c.Next()
   })
 
-	routes.SetupRoutes(r)
+	routes.SetupRoutes(r, container)
 
   // Get port
   port := configs.GetEnv("PORT", "8080")

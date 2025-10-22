@@ -1,13 +1,17 @@
 package routes
 
 import (
+	"task-api/app"
+
 	"github.com/gin-gonic/gin"
 )
 
-// SetupRoutes - combine semua routes
-func SetupRoutes(r *gin.Engine) {
+// SetupRoutes - setup routes
+func SetupRoutes(r *gin.Engine, c *app.Container) {
   // Setup test routes
   SetupTestRoutes(r)
 
-	// TODO: Auth Routes and handle
+  // Auth routes
+  SetupAuthRoutes(r, c.AuthHandler)
+
 }
