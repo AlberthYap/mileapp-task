@@ -3,11 +3,11 @@ package handlers
 import (
 	"context"
 	"io"
-	"log"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 
 	"task-api/services"
 	"task-api/types"
@@ -56,7 +56,11 @@ func (h *AuthHandler) Login(c *gin.Context) {
   response, err := h.authService.Login(ctx, input)
   if err != nil {
     // Log failed attempts
-    log.Printf("Login failed: email=%s, error=%s", input.Email, err.Error())
+		log.Error().
+      Err(err).
+      Str("email", input.Email).
+      Str("ip", c.ClientIP()).
+      Msg("Login failed")
     
     utils.Fail(c, http.StatusUnauthorized, types.MsgLoginFailed, gin.H{
       "error": types.MsgInvalidCredentials,
@@ -65,7 +69,9 @@ func (h *AuthHandler) Login(c *gin.Context) {
   }
 
   // Log successful login
-  log.Printf("Login successful: email=%s", input.Email)
+	log.Info().
+		Str("email", input.Email).
+		Msg("Login successful")
 
   // Success response
   utils.Success(c, http.StatusOK, types.MsgLoginSuccess, response)

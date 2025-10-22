@@ -8,6 +8,8 @@ import (
 	"task-api/repositories"
 	"task-api/types"
 	"task-api/utils"
+
+	"github.com/rs/zerolog/log"
 )
 
 // AuthService - interface for auth service
@@ -36,17 +38,27 @@ func (s *authService) Login(ctx context.Context, input types.LoginInput) (*types
   // Find user by email
   user, err := s.userRepo.FindByEmail(ctx, input.Email)
   if err != nil {
+		log.Debug().
+      Str("email", input.Email).
+      Msg("User not found in database")
     return nil, errors.New("invalid credentials")
   }
 
   // Verify password
   if !utils.CheckPassword(user.Password, input.Password) {
+		log.Debug().
+      Str("email", input.Email).
+      Msg("Invalid password")
     return nil, errors.New("invalid credentials")
   }
 
   // Generate JWT token
   token, err := utils.GenerateToken(user.ID, user.Email)
   if err != nil {
+		log.Error().
+      Err(err).
+      Str("user_id", user.ID.Hex()).
+      Msg("Failed to generate JWT token")
     return nil, errors.New("failed to generate token")
   }
 
