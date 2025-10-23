@@ -14,4 +14,6 @@ func SetupRoutes(r *gin.Engine, c *app.Container) {
   // Auth routes
   SetupAuthRoutes(r, c.AuthHandler)
 
+
+  SetupTaskRoutes(r, c.TaskHandler)
 }
