@@ -4,7 +4,7 @@
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center gap-3">
           <div
-            class="w-9 h-9 bg-linear-to-br from-[#fd9621] to-[#ff7b00] rounded-lg flex items-center justify-center"
+            class="w-9 h-9 bg-linear-to-br from-[#fd9621] via-[#90caf9] to-[#02a8f3] rounded-lg flex items-center justify-center"
           >
             <CheckCircle2 :size="20" class="text-white" />
           </div>

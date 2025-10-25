@@ -11,7 +11,7 @@
       </div>
       <button
         @click="$emit('create')"
-        class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-linear-to-r from-[#fd9621] to-[#ff7b00] text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all"
+        class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-linear-to-r from-[#fd9621] via-[#90caf9] to-[#02a8f3] text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all"
       >
         <Plus :size="18" />
         <span>New Task</span>

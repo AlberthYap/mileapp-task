@@ -6,7 +6,7 @@
       <!-- Header -->
       <div class="text-center mb-8">
         <div
-          class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-[#fd9621] to-[#ff7b00] rounded-2xl mb-4 shadow-lg"
+          class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-[#fd9621] via-[#90caf9] to-[#02a8f3] rounded-2xl mb-4 shadow-lg"
         >
           <CheckCircle2 :size="32" class="text-white" />
         </div>
@@ -47,7 +47,9 @@
         class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
       >
         <!-- Decorative top bar -->
-        <div class="h-2 bg-linear-to-r from-[#fd9621] to-[#ff7b00]"></div>
+        <div
+          class="h-2 bg-linear-to-r from-[#fd9621] via-[#90caf9] to-[#02a8f3]"
+        ></div>
 
         <div class="p-8">
           <form @submit.prevent="handleLogin" class="space-y-5">
@@ -147,32 +149,11 @@
               </Transition>
             </div>
 
-            <!-- Remember & Forgot -->
-            <div class="flex items-center justify-between text-sm pt-1">
-              <label class="flex items-center gap-2 cursor-pointer group">
-                <input
-                  v-model="formData.rememberMe"
-                  type="checkbox"
-                  class="w-4 h-4 rounded border-gray-300 text-[#fd9621] focus:ring-[#fd9621] focus:ring-offset-0 cursor-pointer transition-colors duration-200"
-                />
-                <span
-                  class="text-gray-700 group-hover:text-gray-900 transition-colors duration-200"
-                  >Remember me</span
-                >
-              </label>
-              <a
-                href="#"
-                class="font-medium text-[#fd9621] hover:text-[#e58519] transition-colors duration-200"
-              >
-                Forgot password?
-              </a>
-            </div>
-
             <!-- Submit Button -->
             <button
               type="submit"
               :disabled="!isFormValid || authStore.loading"
-              class="w-full bg-linear-to-r from-[#fd9621] to-[#ff7b00] text-white py-3.5 px-4 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#fd9621] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 flex items-center justify-center gap-2"
+              class="w-full bg-linear-to-r from-[#fd9621] via-[#90caf9] to-[#02a8f3] text-white py-3.5 px-4 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#fd9621] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 flex items-center justify-center gap-2"
             >
               <Loader2
                 v-if="authStore.loading"
@@ -189,17 +170,6 @@
           </form>
         </div>
       </div>
-
-      <!-- Sign Up Link -->
-      <p class="mt-6 text-center text-sm text-gray-600">
-        Don't have an account?
-        <a
-          href="#"
-          class="font-semibold text-[#fd9621] hover:text-[#e58519] transition-colors duration-200"
-        >
-          Create one now
-        </a>
-      </p>
 
       <!-- Footer -->
       <div class="mt-8 text-center text-xs text-gray-500">
@@ -234,7 +204,6 @@ const showPassword = ref(false);
 const formData = ref({
   email: "",
   password: "",
-  rememberMe: false,
 });
 
 const formErrors = ref({

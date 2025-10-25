@@ -133,7 +133,7 @@
             type="button"
             @click="handleSubmit"
             :disabled="loading"
-            class="px-5 py-2.5 bg-linear-to-r from-[#fd9621] to-[#ff7b00] text-white rounded-lg font-medium hover:shadow-lg disabled:opacity-50 transition-all flex items-center gap-2"
+            class="px-5 py-2.5 bg-linear-to-r from-[#fd9621] via-[#90caf9] to-[#02a8f3] text-white rounded-lg font-medium hover:shadow-lg disabled:opacity-50 transition-all flex items-center gap-2"
           >
             <Loader2 v-if="loading" :size="18" class="animate-spin" />
             <span>{{ isEdit ? "Update Task" : "Create Task" }}</span>
