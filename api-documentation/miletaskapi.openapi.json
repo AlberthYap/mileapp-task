@@ -1,0 +1,743 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Default module",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Login",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {
+                "email": "",
+                "password": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "created_at": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "email",
+                            "name",
+                            "created_at"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "token",
+                        "user"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tasks": {
+      "post": {
+        "summary": "Create Task",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {
+                "title": "Testing Task",
+                "description": "Description Task",
+                "status": "pending",
+                "priority": "high",
+                "due_date": "2025-10-20T21:00:00+07:00"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "task": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "user_id": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "priority": {
+                              "type": "string"
+                            },
+                            "due_date": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {}
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "user_id",
+                            "title",
+                            "description",
+                            "status",
+                            "priority",
+                            "due_date",
+                            "tags",
+                            "created_at",
+                            "updated_at"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "task"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "get": {
+        "summary": "Get All Tasks",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "low",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "-created_at",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjhmOGU2MmE5OGNiOWE3YTM5YWQyNmVjIiwiZW1haWwiOiJhZG1pbkB0ZXN0LmNvbSIsImV4cCI6MTc2MTQ1NTI3MiwiaWF0IjoxNzYxMzY4ODcyfQ.Mx7SVgFTov2-E6HVPs_yhGgoIDU3w-h5Rv4umHyPRnk",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-GPC",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "user_id": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "priority": {
+                                "type": "string"
+                              },
+                              "due_date": {
+                                "type": "string"
+                              },
+                              "tags": {
+                                "type": "array",
+                                "items": {}
+                              },
+                              "created_at": {
+                                "type": "string"
+                              },
+                              "updated_at": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "integer"
+                            },
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "total_pages": {
+                              "type": "integer"
+                            },
+                            "has_next_page": {
+                              "type": "boolean"
+                            },
+                            "has_prev_page": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "page",
+                            "limit",
+                            "total",
+                            "total_pages",
+                            "has_next_page",
+                            "has_prev_page"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "tasks",
+                        "meta"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tasks/68fa356812c495b77bb0c460": {
+      "get": {
+        "summary": "Get Tasks By ID",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "user_id": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "priority": {
+                                "type": "string"
+                              },
+                              "due_date": {
+                                "type": "string"
+                              },
+                              "tags": {
+                                "type": "array",
+                                "items": {}
+                              },
+                              "created_at": {
+                                "type": "string"
+                              },
+                              "updated_at": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "integer"
+                            },
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "total_pages": {
+                              "type": "integer"
+                            },
+                            "has_next_page": {
+                              "type": "boolean"
+                            },
+                            "has_prev_page": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "page",
+                            "limit",
+                            "total",
+                            "total_pages",
+                            "has_next_page",
+                            "has_prev_page"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "tasks",
+                        "meta"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Edit Tasks",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {
+                "title": "Testing Task",
+                "description": "Description Task Updated",
+                "status": "pending",
+                "priority": "high",
+                "due_date": "2025-10-20T21:00:00+07:00"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "task": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "user_id": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string"
+                            },
+                            "priority": {
+                              "type": "string"
+                            },
+                            "due_date": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {}
+                            },
+                            "created_at": {
+                              "type": "string"
+                            },
+                            "updated_at": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "user_id",
+                            "title",
+                            "description",
+                            "status",
+                            "priority",
+                            "due_date",
+                            "tags",
+                            "created_at",
+                            "updated_at"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "task"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/tasks/68fc50078a9adb2ec27af689": {
+      "delete": {
+        "summary": "Remove Tasks",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "tasks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "user_id": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "priority": {
+                                "type": "string"
+                              },
+                              "due_date": {
+                                "type": "string"
+                              },
+                              "tags": {
+                                "type": "array",
+                                "items": {}
+                              },
+                              "created_at": {
+                                "type": "string"
+                              },
+                              "updated_at": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "integer"
+                            },
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "total": {
+                              "type": "integer"
+                            },
+                            "total_pages": {
+                              "type": "integer"
+                            },
+                            "has_next_page": {
+                              "type": "boolean"
+                            },
+                            "has_prev_page": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "page",
+                            "limit",
+                            "total",
+                            "total_pages",
+                            "has_next_page",
+                            "has_prev_page"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "tasks",
+                        "meta"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [],
+  "security": []
+}
