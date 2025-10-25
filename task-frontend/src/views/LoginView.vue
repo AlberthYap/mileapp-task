@@ -2,6 +2,63 @@
   <div
     class="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4"
   >
+    <!-- Loading Overlay  -->
+    <Transition
+      enter-active-class="transition-all duration-500 ease-out"
+      leave-active-class="transition-all duration-300 ease-in"
+      enter-from-class="opacity-0"
+      leave-to-class="opacity-0"
+    >
+      <div
+        v-if="authStore.loading"
+        class="fixed inset-0 backdrop-blur-xl bg-linear-to-br from-[#fd9621]/10 via-[#90caf9]/10 to-[#02a8f3]/10 flex items-center justify-center z-50"
+      >
+        <div
+          class="bg-white/80 backdrop-blur-2xl rounded-2xl p-8 max-w-sm mx-4 text-center shadow-2xl border border-white/50"
+        >
+          <!-- Content sama -->
+          <div
+            class="relative inline-flex items-center justify-center w-20 h-20 mb-6"
+          >
+            <div
+              class="absolute inset-0 rounded-full bg-linear-to-r from-[#fd9621] via-[#90caf9] to-[#02a8f3] animate-spin-slow"
+            ></div>
+            <div class="absolute inset-2 rounded-full bg-white"></div>
+            <Loader2
+              :size="32"
+              class="text-[#fd9621] animate-spin relative z-10"
+            />
+          </div>
+
+          <Transition
+            mode="out-in"
+            enter-active-class="transition-all duration-300 ease-out"
+            leave-active-class="transition-all duration-200 ease-in"
+            enter-from-class="opacity-0 translate-y-2"
+            leave-to-class="opacity-0 -translate-y-2"
+          >
+            <div :key="loadingMessage">
+              <p class="text-lg font-semibold text-gray-900 mb-2">
+                {{ loadingMessage }}
+              </p>
+              <p class="text-sm text-gray-500">
+                {{ loadingSubMessage }}
+              </p>
+            </div>
+          </Transition>
+
+          <div class="flex justify-center gap-2 mt-6">
+            <div
+              v-for="i in 3"
+              :key="i"
+              class="w-2 h-2 rounded-full bg-gradient-to-r from-[#fd9621] to-[#02a8f3]"
+              :class="`animate-bounce-${i}`"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
     <div class="w-full max-w-md">
       <!-- Header -->
       <div class="text-center mb-8">
@@ -168,6 +225,11 @@
               />
             </button>
           </form>
+
+          <!-- Info text -->
+          <p class="mt-4 text-xs text-center text-gray-500">
+            First login may take up to 60 seconds as the server wakes up
+          </p>
         </div>
       </div>
 
@@ -190,7 +252,6 @@ import {
   X,
   CheckCircle2,
   Loader2,
-  Github,
   Mail,
   Lock,
   ArrowRight,
@@ -200,6 +261,10 @@ const router = useRouter();
 const authStore = useAuthStore();
 
 const showPassword = ref(false);
+const loadingMessage = ref("Signing in...");
+const loadingSubMessage = ref("Please wait");
+
+let messageTimeout = null;
 
 const formData = ref({
   email: "",
@@ -256,13 +321,85 @@ const handleLogin = async () => {
 
   if (!isEmailValid || !isPasswordValid) return;
 
+  loadingMessage.value = "Signing in...";
+  loadingSubMessage.value = "Please wait";
+
+  messageTimeout = setTimeout(() => {
+    loadingMessage.value = "Server is waking up...";
+    loadingSubMessage.value = "This may take up to 60 seconds on first access";
+  }, 5000);
+
   const result = await authStore.login({
     email: formData.value.email,
     password: formData.value.password,
   });
+
+  if (messageTimeout) {
+    clearTimeout(messageTimeout);
+    messageTimeout = null;
+  }
 
   if (result.success) {
     router.push("/tasks");
   }
 };
 </script>
+
+<style scoped>
+/* Custom animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* Staggered bounce animation for dots */
+@keyframes bounce-1 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes bounce-2 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes bounce-3 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-1 {
+  animation: bounce-1 1s ease-in-out infinite;
+}
+
+.animate-bounce-2 {
+  animation: bounce-2 1s ease-in-out 0.2s infinite;
+}
+
+.animate-bounce-3 {
+  animation: bounce-3 1s ease-in-out 0.4s infinite;
+}
+</style>
