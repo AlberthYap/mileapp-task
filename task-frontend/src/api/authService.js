@@ -8,11 +8,7 @@ export const authService = {
    */
   async login(credentials) {
     try {
-      const response = await axiosInstance.post("/auth/login", {
-        email: credentials.email,
-        password: credentials.password,
-      });
-
+      const response = await axiosInstance.post("/auth/login", credentials);
       return {
         success: true,
         data: response.data,
@@ -20,24 +16,9 @@ export const authService = {
     } catch (error) {
       return {
         success: false,
-        message:
-          error.response?.data?.message || "Login failed. Please try again.",
-        errors: error.response?.data?.errors || {},
+        message: error.response?.data?.message || "Login failed",
+        errors: error.response?.data?.errors,
       };
-    }
-  },
-
-  /**
-   * Logout user
-   * @returns {Promise}
-   */
-  async logout() {
-    try {
-      await axiosInstance.post("/logout");
-      return { success: true };
-    } catch (error) {
-      // Even if logout fails on server, we still clear local data
-      return { success: true };
     }
   },
 };

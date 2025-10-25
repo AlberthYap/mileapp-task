@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useAuthStore } from "@/stores/authStore";
+import { cookieService } from "@/utils/cookies";
 
 console.log("API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
 
@@ -9,7 +9,7 @@ const API_BASE_URL =
 // Create axios instance
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
+  timeout: 60000,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -19,16 +19,18 @@ const axiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const authStore = useAuthStore();
+    // Get token from secure cookie
+    const token = cookieService.getToken();
 
     // Add token to headers if exists
-    if (authStore.token) {
-      config.headers.Authorization = `Bearer ${authStore.token}`;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;
   },
   (error) => {
+    console.error("Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -39,11 +41,22 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    // Handle 401 Unauthorized
+    // Handle 401 Unauthorized (token expired/invalid)
     if (error.response?.status === 401) {
-      const authStore = useAuthStore();
-      authStore.clearAuth();
-      window.location.href = "/login";
+      console.warn("Unauthorized access - clearing auth cookies");
+
+      // Clear all cookies
+      cookieService.clearAll();
+
+      // Redirect to login only if not already on login page
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    }
+
+    // Handle 403 Forbidden
+    if (error.response?.status === 403) {
+      console.error("Access forbidden");
     }
 
     // Handle network errors
