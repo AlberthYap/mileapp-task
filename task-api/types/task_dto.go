@@ -35,7 +35,7 @@ type TaskQueryParams struct {
   Status   string `form:"status" binding:"omitempty,oneof=pending in_progress completed"`
   Priority string `form:"priority" binding:"omitempty,oneof=low medium high"`
   Search   string `form:"search"`
-  Sort     string `form:"sort" binding:"omitempty,oneof=created_at -created_at due_date -due_date priority -priority"`
+  Sort     string `form:"sort" binding:"omitempty,oneof=created_at -created_at due_date -due_date priority -priority title -title"`
   Page     int    `form:"page" binding:"omitempty,min=1"`
   Limit    int    `form:"limit" binding:"omitempty,min=1,max=100"`
 }
