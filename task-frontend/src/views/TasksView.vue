@@ -17,6 +17,7 @@
         @update:status="handleFilterUpdate('status', $event)"
         @update:priority="handleFilterUpdate('priority', $event)"
         @update:sort="handleFilterUpdate('sort', $event)"
+        @reset="resetFilters"
       />
 
       <ErrorAlert :message="taskStore.error" @close="taskStore.clearError" />
@@ -113,6 +114,18 @@ const loadTasks = () => {
   if (filters.value.sort) params.sort = filters.value.sort;
 
   taskStore.fetchTasks(params);
+};
+
+const resetFilters = () => {
+  filters.value = {
+    search: "",
+    status: "",
+    priority: "",
+    sort: "-created_at",
+    page: 1,
+    limit: 10,
+  };
+  loadTasks();
 };
 
 const handleSearchUpdate = (value) => {
