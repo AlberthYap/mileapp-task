@@ -27,10 +27,13 @@ func main() {
   container := app.NewContainer(db.DB)
 
   // Setup Gin
-  r := gin.Default()
+  r := gin.New()
 
   // Logger Middleware
   r.Use(middleware.LoggerMiddleware())
+
+  // Setup trusted proxies
+  utils.SetupTrustedProxies(r)
 
   // CORS Middleware
   r.Use(func(c *gin.Context) {
