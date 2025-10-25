@@ -1,17 +1,17 @@
 <template>
   <div
-    class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4"
+    class="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4"
   >
     <div class="w-full max-w-md">
       <!-- Header -->
       <div class="text-center mb-8">
         <div
-          class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#fd9621] to-[#ff7b00] rounded-2xl mb-4 shadow-lg"
+          class="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-[#fd9621] to-[#ff7b00] rounded-2xl mb-4 shadow-lg"
         >
           <CheckCircle2 :size="32" class="text-white" />
         </div>
         <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-        <p class="text-gray-600">Sign in to continue to TaskFlow</p>
+        <p class="text-gray-600">Sign in to continue to MileTaskFlow</p>
       </div>
 
       <!-- Error Alert -->
@@ -26,7 +26,7 @@
           class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg shadow-sm"
         >
           <div class="flex items-start gap-3">
-            <AlertCircle :size="20" class="text-red-500 flex-shrink-0 mt-0.5" />
+            <AlertCircle :size="20" class="text-red-500 shrink-0 mt-0.5" />
             <div class="flex-1">
               <p class="text-sm font-medium text-red-800">
                 {{ authStore.error }}
@@ -34,7 +34,7 @@
             </div>
             <button
               @click="authStore.clearError"
-              class="flex-shrink-0 text-red-400 hover:text-red-600 transition-colors duration-200"
+              class="shrink-0 text-red-400 hover:text-red-600 transition-colors duration-200"
             >
               <X :size="18" />
             </button>
@@ -47,7 +47,7 @@
         class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
       >
         <!-- Decorative top bar -->
-        <div class="h-2 bg-gradient-to-r from-[#fd9621] to-[#ff7b00]"></div>
+        <div class="h-2 bg-linear-to-r from-[#fd9621] to-[#ff7b00]"></div>
 
         <div class="p-8">
           <form @submit.prevent="handleLogin" class="space-y-5">
@@ -172,7 +172,7 @@
             <button
               type="submit"
               :disabled="!isFormValid || authStore.loading"
-              class="w-full bg-gradient-to-r from-[#fd9621] to-[#ff7b00] text-white py-3.5 px-4 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#fd9621] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 flex items-center justify-center gap-2"
+              class="w-full bg-linear-to-r from-[#fd9621] to-[#ff7b00] text-white py-3.5 px-4 rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#fd9621] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 flex items-center justify-center gap-2"
             >
               <Loader2
                 v-if="authStore.loading"
@@ -203,7 +203,7 @@
 
       <!-- Footer -->
       <div class="mt-8 text-center text-xs text-gray-500">
-        <p>© 2025 TaskFlow. All rights reserved.</p>
+        <p>© 2025 MileTaskFlow. All rights reserved.</p>
       </div>
     </div>
   </div>
@@ -293,9 +293,7 @@ const handleLogin = async () => {
   });
 
   if (result.success) {
-    router.push("/dashboard");
+    router.push("/tasks");
   }
 };
 </script>
-
-<!-- NO CUSTOM CSS! Full Tailwind -->

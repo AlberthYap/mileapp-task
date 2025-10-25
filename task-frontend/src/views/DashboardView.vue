@@ -5,14 +5,18 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-[#fd9621] rounded-lg flex items-center justify-center">
+            <div
+              class="w-8 h-8 bg-[#fd9621] rounded-lg flex items-center justify-center"
+            >
               <CheckCircle2 :size="18" class="text-white" />
             </div>
-            <span class="font-bold text-lg">TaskFlow</span>
+            <span class="font-bold text-lg">MileTaskFlow</span>
           </div>
-          
+
           <div class="flex items-center gap-4">
-            <span class="text-sm text-gray-600">{{ authStore.currentUser?.email }}</span>
+            <span class="text-sm text-gray-600">{{
+              authStore.currentUser?.email
+            }}</span>
             <button
               @click="handleLogout"
               class="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
@@ -35,15 +39,15 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/authStore'
-import { CheckCircle2 } from 'lucide-vue-next'
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/authStore";
+import { CheckCircle2 } from "lucide-vue-next";
 
-const router = useRouter()
-const authStore = useAuthStore()
+const router = useRouter();
+const authStore = useAuthStore();
 
 const handleLogout = async () => {
-  await authStore.logout()
-  router.push('/login')
-}
+  await authStore.logout();
+  router.push("/login");
+};
 </script>

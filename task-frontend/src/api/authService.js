@@ -40,23 +40,4 @@ export const authService = {
       return { success: true };
     }
   },
-
-  /**
-   * Verify token validity
-   * @returns {Promise}
-   */
-  async verifyToken() {
-    try {
-      const response = await axiosInstance.get("/verify-token");
-      return {
-        success: true,
-        data: response.data,
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message: "Token verification failed",
-      };
-    }
-  },
 };
