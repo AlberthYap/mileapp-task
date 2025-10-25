@@ -10,7 +10,7 @@ import (
 
 // ========== INPUT DTOs ==========
 
-// CreateTaskInput - untuk POST /tasks
+// CreateTaskInput - for POST /tasks
 type CreateTaskInput struct {
   Title       string     `json:"title" binding:"required,min=3,max=200"`
   Description string     `json:"description" binding:"max=1000"`
@@ -20,7 +20,7 @@ type CreateTaskInput struct {
   Tags        []string   `json:"tags"`
 }
 
-// UpdateTaskInput - untuk PUT /tasks/:id
+// UpdateTaskInput - for PUT /tasks/:id
 type UpdateTaskInput struct {
   Title       *string    `json:"title" binding:"omitempty,min=3,max=200"`
   Description *string    `json:"description" binding:"omitempty,max=1000"`
@@ -30,7 +30,7 @@ type UpdateTaskInput struct {
   Tags        []string   `json:"tags"`
 }
 
-// TaskQueryParams - untuk GET /tasks
+// TaskQueryParams - for GET /tasks
 type TaskQueryParams struct {
   Status   string `form:"status" binding:"omitempty,oneof=pending in_progress completed"`
   Priority string `form:"priority" binding:"omitempty,oneof=low medium high"`
@@ -42,7 +42,7 @@ type TaskQueryParams struct {
 
 // ========== OUTPUT DTOs ==========
 
-// TaskResponse - untuk response API
+// TaskResponse - for response API
 type TaskResponse struct {
   ID          string     `json:"id"`
   UserID      string     `json:"user_id"`
@@ -57,7 +57,7 @@ type TaskResponse struct {
   CompletedAt *time.Time `json:"completed_at,omitempty"`
 }
 
-// TaskListResponse - untuk list dengan pagination
+// TaskListResponse - for list with pagination
 type TaskListResponse struct {
   Tasks []TaskResponse `json:"tasks"`
   Meta  PaginationMeta `json:"meta"`
@@ -65,7 +65,7 @@ type TaskListResponse struct {
 
 // ========== CONVERTERS ==========
 
-// ToTaskResponse - convert models.Task ke types.TaskResponse
+// ToTaskResponse - convert models.Task to types.TaskResponse
 func ToTaskResponse(task *models.Task) TaskResponse {
   return TaskResponse{
     ID:          task.ID.Hex(),
@@ -82,7 +82,7 @@ func ToTaskResponse(task *models.Task) TaskResponse {
   }
 }
 
-// ToTaskResponseList - convert []models.Task ke []types.TaskResponse
+// ToTaskResponseList - convert []models.Task to []types.TaskResponse
 func ToTaskResponseList(tasks []models.Task) []TaskResponse {
   responses := make([]TaskResponse, len(tasks))
   for i, task := range tasks {
@@ -91,7 +91,7 @@ func ToTaskResponseList(tasks []models.Task) []TaskResponse {
   return responses
 }
 
-// ToTask - convert CreateTaskInput ke models.Task
+// ToTask - convert CreateTaskInput to models.Task
 func (input *CreateTaskInput) ToTask(userID bson.ObjectID) models.Task {
   now := time.Now()
   
